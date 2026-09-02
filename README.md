@@ -1,116 +1,232 @@
-# MediSync — Sistema Inteligente de Agendamento Médico
+# MedSync
 
-- **Equipe:** Luiz Henrique dos Passos Silva, Danilo Almeida Brito, Vinicius Silvestre
-- **Público-alvo:** Médicos, clínicas, consultórios e pacientes que precisam realizar e administrar agendamentos.
-- **Tipo de aplicação:** Aplicação web com backend, banco de dados e módulo de apoio inteligente ao agendamento.
-- **Plataforma(s):** Web, com interface responsiva para computador, tablet e smartphone.
-- **Domínio:** Saúde e gestão de serviços.
-- **Previsão de entrega:** A definir conforme o cronograma do TCC.
+Protótipo acadêmico de um sistema web para organizar disponibilidades e
+agendamentos médicos.
 
-## Visão geral
+**Equipe:** Luiz Henrique dos Passos Silva, Danilo Almeida Brito e Vinicius
+Silvestre.
 
-O MediSync é um sistema web para gerenciamento e otimização do agendamento de consultas médicas. A plataforma permitirá que médicos e clínicas organizem horários e disponibilidades, enquanto pacientes poderão consultar opções e realizar agendamentos de forma simples.
+> [!IMPORTANT]
+> O MedSync não é prontuário eletrônico, não realiza diagnóstico ou triagem e
+> não deve ser usado para emergências ou decisões clínicas. Os dados e usuários
+> do demo são fictícios.
 
-Além das funções tradicionais de agenda, o sistema poderá utilizar regras inteligentes para sugerir horários mais adequados, considerar preferências do paciente e aproveitar vagas liberadas por cancelamentos.
+## Sobre o projeto
 
-A proposta busca reduzir conflitos de horários, tempo gasto com atendimento manual, esquecimentos e períodos ociosos na agenda, mantendo uma solução compatível com o escopo acadêmico do TCC e com foco na experiência de pacientes e profissionais.
+O MedSync centraliza a agenda de profissionais para reduzir consultas marcadas
+manualmente, horários duplicados e períodos ociosos. O recorte atual demonstra
+o fluxo administrativo principal: disponibilizar horários, encontrar uma vaga,
+agendar, visualizar, remarcar e cancelar uma consulta.
 
-## Problema
+O público-alvo definido no projeto original inclui médicos, clínicas,
+consultórios e pacientes. A aplicação é web e responsiva para computador,
+tablet e smartphone.
 
-Em clínicas e consultórios, parte dos agendamentos ainda pode depender de telefone, mensagens ou controles manuais. Esse processo exige disponibilidade de uma pessoa para consultar a agenda, responder ao paciente e registrar alterações, podendo ocasionar demora, duplicidade de horários, falhas de comunicação e dificuldade para visualizar a disponibilidade real dos profissionais.
+## Protótipo atual
 
-Cancelamentos e faltas também podem gerar horários ociosos que poderiam ser aproveitados por outros pacientes. Para o paciente, a dependência de atendimento manual dificulta a consulta rápida de horários disponíveis. Para médicos e clínicas, a falta de centralização torna mais difícil acompanhar a agenda e reorganizá-la quando surgem alterações.
+O protótipo foi estruturado em três experiências:
 
-Resolver esse problema é relevante porque uma agenda centralizada e organizada pode reduzir erros de agendamento, facilitar o atendimento e melhorar a experiência de pacientes e profissionais.
+- **Paciente:** pesquisa por especialidade/profissional, consulta horários e
+  gerencia seus agendamentos.
+- **Profissional:** acompanha a própria agenda e administra disponibilidade.
+- **Administrador:** acompanha os cadastros e a atividade da demonstração; os
+  cadastros administrativos expostos nesta etapa são operados pela API.
 
-## Solução proposta
+O P0 se concentra em:
 
-A solução proposta é uma plataforma web centralizada para gerenciamento de consultas. O paciente poderá consultar médicos, especialidades, datas e horários disponíveis e realizar ou solicitar um agendamento. O médico ou responsável pela clínica poderá cadastrar sua disponibilidade, visualizar a agenda, confirmar, alterar ou cancelar consultas e acompanhar o histórico de agendamentos.
+- autenticação e separação dos perfis;
+- profissionais, pacientes e especialidades;
+- disponibilidade e visualização de horários livres;
+- ordenação explicável por preferência de período e proximidade da data;
+- agendamento, remarcação e cancelamento;
+- agenda do profissional;
+- validação de conflitos;
+- persistência dos dados.
 
-Como evolução do agendamento convencional, o sistema poderá possuir um mecanismo inteligente de recomendação de horários. Esse mecanismo poderá classificar opções considerando critérios como especialidade, disponibilidade, preferência de período, proximidade da data e encaixes existentes.
+Confirmação, histórico completo, notificações internas, fila de espera e a
+evolução das regras de recomendação estão planejados para a próxima etapa.
+Machine Learning para previsão de faltas continua opcional e não integra este
+protótipo.
 
-Em caso de cancelamento, uma fila de espera poderá auxiliar no reaproveitamento do horário liberado. A proposta não é realizar diagnóstico médico ou tomar decisões clínicas, mas melhorar a organização administrativa do agendamento.
+## Tecnologias
 
-## Funcionalidades
+| Camada | Tecnologia |
+| --- | --- |
+| Interface | React, TypeScript e Vite |
+| API | FastAPI e Python |
+| Persistência | SQLAlchemy |
+| Banco padrão do demo | SQLite |
+| Banco recomendado | PostgreSQL 16 |
+| Integração | API REST/JSON |
 
-- Cadastro e autenticação de usuários, com perfis de paciente e profissional.
-- Cadastro e gerenciamento de médicos.
-- Cadastro de pacientes.
-- Cadastro de especialidades médicas.
-- Definição da disponibilidade e dos períodos de atendimento.
-- Visualização de horários disponíveis.
-- Agendamento de consultas.
-- Confirmação, alteração e cancelamento de consultas.
-- Visualização da agenda do médico por calendário.
-- Histórico de agendamentos.
-- Filtros por médico, especialidade e data.
-- Notificações ou lembretes de consultas.
-- **Diferencial: recomendação de horários com base em disponibilidade e preferências do paciente.**
-- **Diferencial: fila de espera para reaproveitamento de horários liberados por cancelamentos.**
-- **Diferencial: validação automática para impedir conflitos de horários.**
+SQLite permite iniciar a demonstração sem infraestrutura adicional.
+PostgreSQL é recomendado para desenvolvimento compartilhado e para validar
+concorrência com maior rigor.
 
-## Diferencial / Concorrência
+## Estrutura
 
-Existem plataformas consolidadas voltadas ao agendamento e à gestão de consultas, como Doctoralia, além de sistemas próprios utilizados por clínicas. O projeto não pretende competir em quantidade de recursos com soluções comerciais completas. Seu diferencial acadêmico será concentrar-se em uma implementação objetiva de agenda médica acompanhada de mecanismos de apoio à escolha e ao aproveitamento dos horários.
+```text
+MedSync/
+├── backend/               API FastAPI, domínio e testes
+├── frontend/              aplicação React/TypeScript
+├── docs/                  arquitetura, decisões e roadmap
+├── .env.example           variáveis de ambiente de referência
+├── docker-compose.yml     PostgreSQL opcional
+└── Makefile               atalhos para desenvolvimento
+```
 
-Enquanto um agendamento convencional apenas apresenta vagas livres, o MediSync poderá ordenar horários conforme critérios definidos no sistema e utilizar uma fila de espera para preencher vagas decorrentes de cancelamentos. O profissional continuará responsável por definir sua disponibilidade, e o paciente terá autonomia para visualizar e selecionar opções sem depender exclusivamente de atendimento manual.
+## Pré-requisitos
 
-## Inovação / Criatividade
+- Python 3.11 ou superior.
+- Node.js 20 ou superior.
+- pnpm via Corepack.
+- Docker Desktop somente se quiser usar PostgreSQL.
+- Git.
 
-A inovação está na combinação de uma interface de calendário com mecanismos de organização inteligente da agenda. Em vez de tratar todos os horários disponíveis da mesma forma, o sistema poderá atribuir uma pontuação às opções conforme critérios como especialidade, período preferido pelo paciente, proximidade da data e disponibilidade do profissional, apresentando primeiro as alternativas mais adequadas.
+## Início rápido com SQLite
 
-Outra possibilidade é a fila de espera inteligente: quando uma consulta for cancelada, o sistema poderá identificar pacientes interessados em um horário compatível e disponibilizar a vaga novamente de maneira organizada.
+Clone o repositório e entre na pasta do projeto. Os comandos abaixo devem ser
+executados a partir da raiz do MedSync.
 
-Como extensão experimental, caso existam dados suficientes e o tempo de desenvolvimento permita, poderá ser estudado um modelo de previsão de faltas para apoiar lembretes e confirmações. Essa funcionalidade permanecerá opcional para não comprometer o escopo principal.
+### Windows PowerShell
 
-## Escopo do projeto
+Prepare a API:
 
-### Essencial (MVP – obrigatório)
+```powershell
+Copy-Item .env.example .env
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r backend\requirements.txt
+python -m uvicorn app.main:app --app-dir backend --reload --env-file .env
+```
 
-- Cadastro e login de usuários.
-- Perfis de paciente e profissional.
-- Cadastro de médicos, pacientes e especialidades.
-- Definição de horários disponíveis.
-- Agendamento, alteração e cancelamento de consultas.
-- Validação para impedir conflitos de horários.
-- Visualização da agenda do médico.
-- Banco de dados para armazenamento das informações.
+Em outro terminal, prepare a interface:
 
-### Importante (se houver tempo)
+```powershell
+corepack enable
+pnpm --dir frontend install
+pnpm --dir frontend dev
+```
 
-- Confirmação de consultas.
-- Histórico de consultas e agendamentos.
-- Filtros por médico, especialidade e data.
-- Notificações e lembretes.
-- Recomendação de horários por critérios de preferência e disponibilidade.
-- Fila de espera e reaproveitamento de horários cancelados.
+### Linux ou macOS
 
-### Opcional (baixa prioridade)
+Prepare a API:
 
-- Integração com serviço externo de mensagens ou e-mail.
-- Relatórios básicos para médicos ou clínicas.
-- Avaliação do atendimento após a consulta.
-- Estudo experimental de previsão de faltas com Machine Learning, condicionado à existência de dados adequados.
+```bash
+cp .env.example .env
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r backend/requirements.txt
+python -m uvicorn app.main:app --app-dir backend --reload --env-file .env
+```
 
-## Planejamento (simplificado)
+Em outro terminal, prepare a interface:
 
-| Etapa | Descrição | Prazo |
+```bash
+corepack enable
+pnpm --dir frontend install
+pnpm --dir frontend dev
+```
+
+Depois de iniciar os dois processos:
+
+- Interface: <http://localhost:5173>
+- API: <http://localhost:8000>
+- Documentação interativa da API: <http://localhost:8000/docs>
+
+## Contas de demonstração
+
+As contas são criadas pelo seed da API e usam exclusivamente identidades
+fictícias.
+
+| Perfil | E-mail | Senha |
 | --- | --- | --- |
-| 1 | Definição do projeto e levantamento de requisitos | 13/08/2026 |
-| 2 | Desenvolvimento inicial da interface e modelagem do banco de dados | A definir |
-| 3 | Desenvolvimento do backend e integração das funcionalidades | A definir |
-| 4 | Implementação dos recursos inteligentes, testes e validação | A definir |
-| 5 | Documentação, correções e entrega final | A definir |
+| Administrador | `admin@medsync.test` | `demo123` |
+| Paciente | `paciente@medsync.test` | `demo123` |
+| Clínica geral | `medico@medsync.test` | `demo123` |
+| Cardiologia | `cardiologista@medsync.test` | `demo123` |
+| Dermatologia | `dermatologista@medsync.test` | `demo123` |
+| Pediatria | `pediatra@medsync.test` | `demo123` |
 
-## Tecnologias (opcional neste momento)
+Essas credenciais são públicas por definição e nunca devem ser reutilizadas em
+outro ambiente.
 
-Sugestão inicial:
+## PostgreSQL opcional
 
-- **Frontend:** React com JavaScript ou TypeScript.
-- **Backend:** FastAPI (Python) ou Node.js.
-- **Banco de dados:** PostgreSQL.
-- **API:** REST.
-- **Módulo inteligente:** Python para regras de recomendação e, caso a extensão experimental seja implementada, Machine Learning.
-- **Versionamento:** Git e GitHub.
+O Compose contém somente o PostgreSQL, pois frontend e backend ainda não têm
+Dockerfiles próprios.
 
-A escolha definitiva das tecnologias poderá ser ajustada durante o desenvolvimento conforme os requisitos da disciplina e a experiência da equipe.
+1. Inicie o banco:
+
+   ```bash
+   docker compose up -d postgres
+   ```
+
+2. Em `.env`, substitua `DATABASE_URL` pela URL PostgreSQL comentada no arquivo.
+
+3. Reinicie a API.
+
+Para acompanhar ou encerrar o serviço:
+
+```bash
+docker compose logs -f postgres
+docker compose down
+```
+
+O volume nomeado `medsync_postgres_data` preserva os dados entre reinícios do
+contêiner.
+
+## Verificações de desenvolvimento
+
+Com o ambiente Python ativo e as dependências instaladas:
+
+```bash
+python -m pytest backend
+```
+
+Para validar a interface:
+
+```bash
+pnpm --dir frontend lint
+pnpm --dir frontend build
+```
+
+O frontend ainda não declara uma suíte automatizada própria; lint, build e a
+validação manual dos fluxos responsivos são as verificações disponíveis neste
+estágio.
+
+Na revisão de 01/09/2026, a suíte do backend concluiu **8 testes**, o lint do
+frontend passou e o build de produção foi gerado com sucesso.
+
+Em sistemas com `make`, os mesmos atalhos podem ser consultados com:
+
+```bash
+make help
+```
+
+## Requisitos preservados da proposta original
+
+O projeto original definiu como essenciais cadastro e login, perfis de paciente
+e profissional, cadastros de médicos/pacientes/especialidades, disponibilidade,
+agendamento, remarcação, cancelamento, prevenção de conflitos, agenda do médico
+e armazenamento em banco.
+
+Como evoluções, foram propostos confirmação, histórico, filtros, lembretes,
+recomendação de horários e reaproveitamento de cancelamentos por fila de espera.
+Integrações externas, relatórios, avaliações e previsão de faltas foram
+classificados como opcionais.
+
+## Documentação
+
+- [Arquitetura](docs/ARCHITECTURE.md)
+- [Decisões de produto](docs/PRODUCT_DECISIONS.md)
+- [Roadmap](docs/ROADMAP.md)
+
+## Segurança e uso de dados
+
+O projeto ainda é um protótipo acadêmico. Antes de receber usuários ou dados
+reais, será necessária uma revisão de autenticação, autorização, LGPD,
+auditoria, retenção, recuperação de conta, segredos e segurança operacional.
+Não cadastre informações médicas ou dados pessoais reais na demonstração.
