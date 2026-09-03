@@ -1,6 +1,6 @@
 # MediSync — Sistema Inteligente de Agendamento Médico
 
-- **Equipe:** Luiz Henrique dos Passos Silva, Danilo Almeida Brito, Vinicius Silvestre
+- **Equipe:** Luiz Henrique dos Passos Silva, Danilo Almeida Brito, Leandro 
 - **Público-alvo:** Médicos, clínicas, consultórios e pacientes que precisam realizar e administrar agendamentos.
 - **Tipo de aplicação:** Aplicação web com backend, banco de dados e módulo de apoio inteligente ao agendamento.
 - **Plataforma(s):** Web, com interface responsiva para computador, tablet e smartphone.
@@ -9,7 +9,7 @@
 
 ## Visão geral
 
-O MediSync é um sistema web para gerenciamento e otimização do agendamento de consultas médicas. A plataforma permitirá que médicos e clínicas organizem horários e disponibilidades, enquanto pacientes poderão consultar opções e realizar agendamentos de forma simples.
+O MediSync é um app para gerenciamento e otimização do agendamento de consultas médicas. A plataforma permitirá que médicos e clínicas organizem horários e disponibilidades, enquanto pacientes poderão consultar opções e realizar agendamentos de forma simples.
 
 Além das funções tradicionais de agenda, o sistema poderá utilizar regras inteligentes para sugerir horários mais adequados, considerar preferências do paciente e aproveitar vagas liberadas por cancelamentos.
 
