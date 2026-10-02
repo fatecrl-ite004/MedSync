@@ -1,116 +1,87 @@
-# MediSync — Sistema Inteligente de Agendamento Médico
+# MediSync — Área médica v0.5
 
-- **Equipe:** Luiz Henrique dos Passos Silva, Danilo Almeida Brito, Leandro 
-- **Público-alvo:** Médicos, clínicas, consultórios e pacientes que precisam realizar e administrar agendamentos.
-- **Tipo de aplicação:** Aplicação web com backend, banco de dados e módulo de apoio inteligente ao agendamento.
-- **Plataforma(s):** Web, com interface responsiva para computador, tablet e smartphone.
-- **Domínio:** Saúde e gestão de serviços.
-- **Previsão de entrega:** A definir conforme o cronograma do TCC.
+Projeto acadêmico React + TypeScript + Express + Socket.IO. Evolução da base Doctor Focus v0.4, mantendo a identidade visual e a área de paciente para testes.
 
-## Visão geral
+## Abrir no Windows
 
-O MediSync é um app para gerenciamento e otimização do agendamento de consultas médicas. A plataforma permitirá que médicos e clínicas organizem horários e disponibilidades, enquanto pacientes poderão consultar opções e realizar agendamentos de forma simples.
+1. Instale Node.js 20 ou superior, com npm.
+2. Extraia **todo o ZIP** para uma pasta. Não execute de dentro do arquivo compactado.
+3. Abra `INICIAR-WINDOWS.bat`. Na primeira vez, ele instala as dependências e precisa de internet.
+4. Aguarde os dois terminais iniciarem e abra http://localhost:5173.
+5. Clique em **Entrar como Dra. Ana**. Mantenha os terminais abertos.
 
-Além das funções tradicionais de agenda, o sistema poderá utilizar regras inteligentes para sugerir horários mais adequados, considerar preferências do paciente e aproveitar vagas liberadas por cancelamentos.
+Se preferir, abra dois terminais na pasta extraída:
 
-A proposta busca reduzir conflitos de horários, tempo gasto com atendimento manual, esquecimentos e períodos ociosos na agenda, mantendo uma solução compatível com o escopo acadêmico do TCC e com foco na experiência de pacientes e profissionais.
+```powershell
+cd backend
+npm.cmd ci
+npm.cmd start
+```
 
-## Problema
+```powershell
+cd frontend
+npm.cmd ci
+npm.cmd run dev
+```
 
-Em clínicas e consultórios, parte dos agendamentos ainda pode depender de telefone, mensagens ou controles manuais. Esse processo exige disponibilidade de uma pessoa para consultar a agenda, responder ao paciente e registrar alterações, podendo ocasionar demora, duplicidade de horários, falhas de comunicação e dificuldade para visualizar a disponibilidade real dos profissionais.
+No macOS/Linux, use `npm` no lugar de `npm.cmd`. API: http://localhost:3000. Se uma porta estiver ocupada, encerre a instância anterior antes de abrir outra. O frontend usa a API local na porta 3000.
 
-Cancelamentos e faltas também podem gerar horários ociosos que poderiam ser aproveitados por outros pacientes. Para o paciente, a dependência de atendimento manual dificulta a consulta rápida de horários disponíveis. Para médicos e clínicas, a falta de centralização torna mais difícil acompanhar a agenda e reorganizá-la quando surgem alterações.
+## O que foi completado
 
-Resolver esse problema é relevante porque uma agenda centralizada e organizada pode reduzir erros de agendamento, facilitar o atendimento e melhorar a experiência de pacientes e profissionais.
+- **Agenda:** nova consulta, pesquisa por paciente/serviço, filtros por data e status, reagendamento, cancelamento com motivo, início e conclusão do atendimento.
+- **Validações:** horários futuros para agendar/reagendar, duração entre 10 e 240 minutos e bloqueio de sobreposição de consultas.
+- **Pacientes:** cadastro, busca, contato, alergias informadas e histórico individual de consultas e registros.
+- **Registro do atendimento:** resumo e plano/orientações, edição enquanto em atendimento, leitura após conclusão. É necessário salvar o resumo antes de concluir.
+- **Perfil médico:** edição de nome, CRM, título, cidade, estado, especialidades e apresentação. Formação, experiências e catálogo continuam com os exemplos da base.
+- **Navegação:** botão de retorno acima do conteúdo, com a origem da navegação. Abrir o chat pela agenda permite voltar à agenda; abrir pelo painel permite voltar ao painel. Ao sair da chamada, câmera/microfone são liberados.
+- **Tema:** claro/escuro somente nas configurações, sem botão no cabeçalho. Configurações também acessíveis no menu inferior, que permite rolagem horizontal em telas pequenas.
+- **Persistência:** perfil, pacientes, agenda, registros, mensagens, preferências, notificações e demais dados são gravados localmente.
+- **Qualidade de uso:** status em português, estados vazios, feedback de erros, formulários com foco contido e confirmação antes de descartar alterações, opção de sair da conta.
 
-## Solução proposta
+## Roteiro para apresentar a área médica
 
-A solução proposta é uma plataforma web centralizada para gerenciamento de consultas. O paciente poderá consultar médicos, especialidades, datas e horários disponíveis e realizar ou solicitar um agendamento. O médico ou responsável pela clínica poderá cadastrar sua disponibilidade, visualizar a agenda, confirmar, alterar ou cancelar consultas e acompanhar o histórico de agendamentos.
+1. Entre como médica e abra **Consultas**.
+2. Cadastre um paciente e clique em **Nova consulta**; escolha uma data futura.
+3. Teste **Reagendar** e a busca/filtros da agenda.
+4. Clique em **Iniciar atendimento**, depois **Registrar atendimento**.
+5. Preencha e salve o resumo e o plano; clique em **Concluir**.
+6. Abra **Histórico** para ver as consultas e os registros do paciente.
+7. Abra um **Chat** pela agenda e use **Voltar para Consultas**.
+8. Edite o perfil e altere o tema em **Configurações**.
+9. Reinicie o backend e entre novamente: os dados permanecem.
 
-Como evolução do agendamento convencional, o sistema poderá possuir um mecanismo inteligente de recomendação de horários. Esse mecanismo poderá classificar opções considerando critérios como especialidade, disponibilidade, preferência de período, proximidade da data e encaixes existentes.
+Consultas iniciais são criadas em datas relativas à primeira execução. Consultas passadas ainda confirmadas continuam visíveis para que o médico possa resolvê-las; não são contabilizadas como “futuras”.
 
-Em caso de cancelamento, uma fila de espera poderá auxiliar no reaproveitamento do horário liberado. A proposta não é realizar diagnóstico médico ou tomar decisões clínicas, mas melhorar a organização administrativa do agendamento.
+## Chat e telemedicina
 
-## Funcionalidades
+Para testar os dois lados, use a janela normal como médica e uma janela anônima como João. Crie a sala em uma consulta de **João Silva**; os outros pacientes são cadastros de demonstração sem login próprio. Autorize câmera e microfone nos dois lados. A consulta deve estar confirmada ou em atendimento; consultas canceladas/concluídas não abrem novas salas.
 
-- Cadastro e autenticação de usuários, com perfis de paciente e profissional.
-- Cadastro e gerenciamento de médicos.
-- Cadastro de pacientes.
-- Cadastro de especialidades médicas.
-- Definição da disponibilidade e dos períodos de atendimento.
-- Visualização de horários disponíveis.
-- Agendamento de consultas.
-- Confirmação, alteração e cancelamento de consultas.
-- Visualização da agenda do médico por calendário.
-- Histórico de agendamentos.
-- Filtros por médico, especialidade e data.
-- Notificações ou lembretes de consultas.
-- **Diferencial: recomendação de horários com base em disponibilidade e preferências do paciente.**
-- **Diferencial: fila de espera para reaproveitamento de horários liberados por cancelamentos.**
-- **Diferencial: validação automática para impedir conflitos de horários.**
+O chat, avaliações, notificações, denúncias, feedback e opções de acessibilidade da versão anterior foram mantidos. Salas vinculadas são encerradas quando a consulta é concluída ou cancelada.
 
-## Diferencial / Concorrência
+## Dados locais
 
-Existem plataformas consolidadas voltadas ao agendamento e à gestão de consultas, como Doctoralia, além de sistemas próprios utilizados por clínicas. O projeto não pretende competir em quantidade de recursos com soluções comerciais completas. Seu diferencial acadêmico será concentrar-se em uma implementação objetiva de agenda médica acompanhada de mecanismos de apoio à escolha e ao aproveitamento dos horários.
+O backend cria `backend/data/medisync.json` na primeira execução e usa gravação em arquivo temporário seguida de substituição. Para backup, pare o backend e copie a pasta `data`. Para reiniciar a demonstração do zero, pare o backend e **renomeie** essa pasta, preservando a cópia. Atualizações do projeto devem manter a pasta `data` da instalação anterior.
 
-Enquanto um agendamento convencional apenas apresenta vagas livres, o MediSync poderá ordenar horários conforme critérios definidos no sistema e utilizar uma fila de espera para preencher vagas decorrentes de cancelamentos. O profissional continuará responsável por definir sua disponibilidade, e o paciente terá autonomia para visualizar e selecionar opções sem depender exclusivamente de atendimento manual.
+Esse armazenamento é para uma instância local, sem banco multiusuário e sem criptografia. Não execute vários backends sobre o mesmo arquivo. Para testes isolados, a variável `MEDISYNC_DATA_FILE` permite escolher outro arquivo.
 
-## Inovação / Criatividade
+## Verificações
 
-A inovação está na combinação de uma interface de calendário com mecanismos de organização inteligente da agenda. Em vez de tratar todos os horários disponíveis da mesma forma, o sistema poderá atribuir uma pontuação às opções conforme critérios como especialidade, período preferido pelo paciente, proximidade da data e disponibilidade do profissional, apresentando primeiro as alternativas mais adequadas.
+```powershell
+cd backend
+npm.cmd test
+```
 
-Outra possibilidade é a fila de espera inteligente: quando uma consulta for cancelada, o sistema poderá identificar pacientes interessados em um horário compatível e disponibilizar a vaga novamente de maneira organizada.
+O teste usa dados temporários e verifica cadastro, restrição de papel nos novos endpoints médicos, conflitos de horário, reagendamento, transições de status, cancelamento, registro obrigatório, bloqueio de edição após conclusão e persistência após reiniciar.
 
-Como extensão experimental, caso existam dados suficientes e o tempo de desenvolvimento permita, poderá ser estudado um modelo de previsão de faltas para apoiar lembretes e confirmações. Essa funcionalidade permanecerá opcional para não comprometer o escopo principal.
+```powershell
+cd frontend
+npm.cmd run build
+```
 
-## Escopo do projeto
+Compila TypeScript estrito e gera o frontend em `dist`.
 
-### Essencial (MVP – obrigatório)
+## Limites desta entrega
 
-- Cadastro e login de usuários.
-- Perfis de paciente e profissional.
-- Cadastro de médicos, pacientes e especialidades.
-- Definição de horários disponíveis.
-- Agendamento, alteração e cancelamento de consultas.
-- Validação para impedir conflitos de horários.
-- Visualização da agenda do médico.
-- Banco de dados para armazenamento das informações.
+Esta é uma versão funcional de demonstração da área médica, não um sistema clínico pronto para produção. O acesso por papel é demonstrativo e não autentica identidades; os endpoints originais continuam sem autorização real. Use apenas dados fictícios. Um produto real ainda precisa de autenticação e autorização em todas as rotas e eventos, banco apropriado, trilha de auditoria, proteção de dados e revisão LGPD. O registro local não constitui prontuário certificado, receita ou documento assinado digitalmente.
 
-### Importante (se houver tempo)
-
-- Confirmação de consultas.
-- Histórico de consultas e agendamentos.
-- Filtros por médico, especialidade e data.
-- Notificações e lembretes.
-- Recomendação de horários por critérios de preferência e disponibilidade.
-- Fila de espera e reaproveitamento de horários cancelados.
-
-### Opcional (baixa prioridade)
-
-- Integração com serviço externo de mensagens ou e-mail.
-- Relatórios básicos para médicos ou clínicas.
-- Avaliação do atendimento após a consulta.
-- Estudo experimental de previsão de faltas com Machine Learning, condicionado à existência de dados adequados.
-
-## Planejamento (simplificado)
-
-| Etapa | Descrição | Prazo |
-| --- | --- | --- |
-| 1 | Definição do projeto e levantamento de requisitos | 13/08/2026 |
-| 2 | Desenvolvimento inicial da interface e modelagem do banco de dados | A definir |
-| 3 | Desenvolvimento do backend e integração das funcionalidades | A definir |
-| 4 | Implementação dos recursos inteligentes, testes e validação | A definir |
-| 5 | Documentação, correções e entrega final | A definir |
-
-## Tecnologias (opcional neste momento)
-
-Sugestão inicial:
-
-- **Frontend:** React com JavaScript ou TypeScript.
-- **Backend:** FastAPI (Python) ou Node.js.
-- **Banco de dados:** PostgreSQL.
-- **API:** REST.
-- **Módulo inteligente:** Python para regras de recomendação e, caso a extensão experimental seja implementada, Machine Learning.
-- **Versionamento:** Git e GitHub.
-
-A escolha definitiva das tecnologias poderá ser ajustada durante o desenvolvimento conforme os requisitos da disciplina e a experiência da equipe.
+WebRTC usa STUN público; uma chamada entre redes diferentes pode exigir TURN e HTTPS. A qualidade audiovisual real depende dos dispositivos, permissões e rede. Os controles locais de navegação usam histórico em memória: recarregar a página volta ao login, preservando os dados salvos no backend.
